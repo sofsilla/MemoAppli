@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+	<title>My experiment</title> 
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link href="jspsych-6.0.2/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+	<link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
+	
+</head>
+<body style="height: 100%">
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" role="button" onClick="resetWelcomPan()">MemoAppli</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#" data-toggle="modal" data-target="#user_infos_modal" >
+						<span class="glyphicon glyphicon-user blue" aria-hidden="true"></span>
+						Information Personnelles <span class="sr-only">(current)</span></a>
+					</li>  
+					<li id="param_button">
+						<a href="#" data-toggle="modal" data-target="#param_modal">
+							<span class="glyphicon glyphicon-cog orange" aria-hidden="true"></span>
+							Paramétrage
+						</a>
+					</li>  
+				</ul>
+
+				<ul class="navbar-form navbar-right">
+					<button class="btn btn-default" onClick="resetWelcomPan()">Recommencer</button>
+				</ul>
+				<form class="navbar-form navbar-right" action="labo.html">
+					<button class="btn btn-warning black" >MODE LABO</button>
+				</form >
+
+			</div>
+		</div>
+	</nav>
+
+	<!-- Modal Parametres -->
+	<div id="param_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h3 class="modal-title" id="exampleModalLabel">Paramétrage</h3>
+				</div>
+
+				<div class="modal-body">
+
+					<h4>Items : </h4>
+					<label>Nombre d'item à mémoriser : </label><br />
+					<input id="items_min" type="number" value="1" min="1" max="20"  required  />  à
+					<input id="items_max" type="number" value="1" min="1"  max="20" required  /><br /><br />
+
+					<label>Temps d'affichage des items (ms) :</label><br />
+					<input id="display_time_mem_sti_min" type="number" value="2000" min="0" max="100000" step="50" required /> à 
+					<input id="display_time_mem_sti_max" type="number"  value="2000" min="0" max="100000" step="50" required /> pas : 
+					<input id="display_time_mem_sti_step" type="number"  value="0" min="0" max="100000" step="50" required /> 
+					<button type="button" class="btn btn-warning" onclick="show_popup(display_time_mem_sti);">
+						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+					</button>
+					<br /><br />
+
+					<label>Temps de pause après items : </label><br />
+					<!-- <input id="items_pause" type="number" value="1000" min="0" max="100000" step="50" required  /><br /><br/> -->
+					<input id="items_pause_min" type="number" value="1000" min="0" max="100000" step="50" required /> à 
+					<input id="items_pause_max" type="number"  value="1000" min="0" max="100000" step="50" required /> pas : 
+					<input id="items_pause_step" type="number"  value="0" min="0" max="100000" step="50" required /> 
+					<button type="button" class="btn btn-warning" onclick="show_popup(items_pause);">
+						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+					</button>
+					<br /><br />
+
+					<label> Type de Rappel :  </label>
+					<div id="type_recall_div">
+						<select>
+						  <option value="image">Image</option>
+						  <option value="keyboard_voice">Clavier - Voix (chrome seulement)</option>
+						  <option value="free">Libre</option>
+						</select>
+					</div>
+
+
+					<hr/>
+					<h4>Distracteurs : </h4>
+					<label>Nombre de distracteurs entre items: </label><br />
+					<input id="distracteur_min" type="number" value="1" min="1" max="100" required />  à
+					<input id="distracteur_max" type="number" value="1" min="1" max="100" required /> pas : 
+					<input id="distracteur_step" type="number"  value="0" min="0" max="100000" step="1" required />  
+					<button type="button" class="btn btn-warning" onclick="show_popup(nb_distract_sti);">
+						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+					</button>
+					<br /><br />
+
+					<label>Nombre d'éléments d'un distracteur : </label><br />
+					<input id="distracteur_elt_min" type="number" value="7" min="1" max="100" required />  à
+					<input id="distracteur_elt_max" type="number" value="7" min="1" max="100" required /><br /><br />
+
+					<label>Taille : </label>
+					<input id="distractor_size" type="number" value="8" min="1" max="10" required /> <label> Eloignement : </label>
+					<input id="distractor_distance" type="range" min="0" max="40" value="40" style="width: 200px">
+					<br /><br />
+
+					<label>Temps d'affichage d'un element d'un distracteur (ms) : </label>
+					<input id="distracteur_elt_display" type="number" value="500" min="0" max="100000" step="50" required /> <br /><br />
+
+					<label>Temps inter elements d'un distracteur (ms) : </label>
+					<input id="distracteur_elt_pause" type="number" value="300" min="0" max="100000" step="50" required /> <br /><br />
+
+					<label>Temps d'affichage des questions (ms) : </label>
+					<input id="answ_display_time" type="number" value="3000" min="0" max="100000" step="50" required /> <br /><br />
+
+					<label>Ecarts des réponses proposées : </label>
+					<input id="delta_proposed_answ_min" type="number" value="1" min="1" max="7"  required  />
+					<br /><br />
+					<!-- <input id="delta_proposed_answ_max" type="number" value="1" min="1"  max="7" required  /> <br /><br /> -->
+
+					<label>Coût cognitif : </label> :
+					<input id="cognitif_cost_1" type="number" value="0.5" min="0.05" max="1" step="0.05" required /> 
+					<input id="cognitif_cost_2" type="number" value="" min="0.05" max="1" step="0.05" required /> 
+					<input id="cognitif_cost_3" type="number" value="" min="0.05" max="1" step="0.05" required /> 
+					<input id="cognitif_cost_4" type="number" value="" min="0.05" max="1" step="0.05" required />
+					<button type="button" class="btn btn-warning" onclick="show_popup(cognitif_cost);">
+						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+					</button><br /><br />
+
+					<span class="label label-default">Temps total d'un distracteur (ms) :</span>
+					<input id="distract_time" style="border:none" type="time" step="0.01" readonly="true" size="4"></input><br />
+					<span class="label label-default">Temps de pause post distracteur (ms) :</span>
+					<input id="distract_pause_time" style="border:none" type="time" step="0.01" readonly="true" size="4"></input>
+
+					<hr/>
+					<label>Nombre d'itération : </label>
+					<input id="repeat" type="number"  value="1" min="1" max="100" required />
+					<input type="checkbox" id="random_factorial" name="p_checkbox" value="checkbox" checked >Factorielle aléatoire<br/>
+
+					<span class="label label-default">Nombre de séries générées :</span>
+					<span id="nbr_exp" class="badge back_red">1</span><br /><br />
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning pull-left" onClick="default_param()">Valeurs par défaut</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+					<button type="button" class="btn btn-primary" onClick="save_param()">Sauvegarder</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal Infos User-->
+	<div id="user_infos_modal" class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h3 class="modal-title" id="exampleModalLabel">Informations personnelles</h3>
+				</div>
+
+				<div class="modal-body">
+
+					<table class="table">
+						<thead>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">Identifiant :</th>
+								<td><input class="form-control" type="text" id="user_id"></td>
+							</tr>
+							<tr>
+								<th scope="row">Clef utilisateur :</th>
+								<td><input class="form-control" type="text" id="user_lab_id"></td>
+							</tr>
+							<tr>
+								<th scope="row">Age : </th>
+								<td><input  class="form-control" id="age" type="number" min="1" required  /> </td>
+							</tr>
+							<tr>
+								<th scope="row">Sexe : </th>
+								<td>
+									<select id="sex" class="selectpicker form-control">
+										<option>Femme</option>
+										<option>Homme</option>
+										<option>Ne pas renseigner</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Main d'écriture : </th>
+								<td>
+									<select id="writing_hand" class="selectpicker form-control">
+										<option>Droitier</option>
+										<option>Gaucher</option>
+										<option>Ne pas renseigner</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Vision : </th>
+								<td>
+									<select id="vision" class="selectpicker form-control">
+										<option>Normale</option>
+										<option>Corrigée à la normale</option>
+										<option>Ne pas renseigner</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Niveau d'étude : </th>
+								<td>
+									<select id="level_of_study" class="selectpicker form-control">
+										<option>Niveau VI (6ème - 3ème)</option>
+										<option>Niveau V (CAP ou BEP)</option>
+										<option>Niveau IV (Bac général, technologique ou professionnel)</option>
+										<option>Niveau III (Bac+2 : DUT, BTS)</option>
+										<option>Niveau II (Bac+3 ou 4)</option>
+										<option>Niveau I (Bac+4 ou 5)</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Domaine : </th>
+								<td>
+									<input class="form-control" type="text" id="domaine">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning pull-left" onClick="erase_user()">Effacer mes données</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+						<button type="button" class="btn btn-primary" onClick="save_user()">Sauvegarder</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal Marminton-->
+	<div id="marmiton_infos_modal" class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h3 class="modal-title" id="exampleModalLabel">Sélection d'ingrédients</h3>
+				</div>
+
+				<div class="modal-body">
+					<div id="body_modal_marmiton" class="modal-body" style="font-size: 1.5em;">
+					</div>
+
+					<div class="modal-footer">
+						<a id="marmiton_link" target="_blank" href="http://www.marmiton.org/recettes/recherche.aspx?type=all&aqt=">
+							<button type="button" class="btn btn-warning" onClick="save_user()">Voir recettes</button>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-fluid" style="margin: 0;height: 90%;">
+		<div class="row" style="height: 100%;">
+
+			<div class="stopwatch" style="display:none;"></div>
+
+			<div class="col-sm-2 alert alert-info" role="alert" style="height: 100%;display:none">
+				<ul class="results"></ul>
+			</div>
+
+			<div class="col-sm-12" style="height: 100%;">
+				<div id="exp_contener"> 
+					
+				</div>
+				<div id="result_contener"> 
+				</div>
+				<div id="result_tab" >
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/data.js"></script>
+	<script src="js/parametrage_standard.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/results.js"></script>
+	<script src="js/custom_parameter.js"></script>
+	<script src="js/classes.js"></script>
+	<script src="js/stop_watch.js"></script>
+	<script src="js/send_email.js"></script>
+	<script src="js/md5_hash.js"></script>
+	<script src="js/speech_recognation.js"></script>
+	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+
+
+	<script src="jspsych-6.0.2/jspsych.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-html-keyboard-response.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-survey-text.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-html-button-response.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-instructions.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-animation-position.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-categorize-animation.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-html-keyboard-response.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-survey-multi-select.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-survey-multi-select-image.js"></script>
+	<script src="jspsych-6.0.2/plugins/jspsych-survey-multi-choice-image.js"></script>
+
+	<script>
+
+	
+		var isChrome = false;
+		var isChromium = window.chrome;
+		var winNav = window.navigator;
+		var vendorName = winNav.vendor;
+		var isOpera = typeof window.opr !== "undefined";
+		var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+		var isIOSChrome = winNav.userAgent.match("CriOS");
+
+		if (isIOSChrome) {
+		   // is Google Chrome on IOS
+		} else if(
+		  isChromium !== null &&
+		  typeof isChromium !== "undefined" &&
+		  vendorName === "Google Inc." &&
+		  isOpera === false &&
+		  isIEedge === false
+		) {
+		   isChrome = true;
+		} else { 
+		   isChrome = false;
+		}
+		log(isChrome);
+
+		// Déclaration des pamaètres
+		var nb_mem_sti  = [2] ;
+		var items_pause = [1000];
+		var nb_distract_sti = [1] ;
+		var nb_distracteur_elt = [7];
+		var display_time_mem_sti = [2000];
+		var delta_proposed_answ = 1;
+		var repeat = 1;
+		var random_factorial = true;
+		var answ_display_time = 3000;
+		var distracteur_elt_display = 500;
+		var distracteur_elt_pause = 300;
+		var cognitif_cost = [0.5];
+		var distract_pause_time = 13500;
+		var training_mode = false;
+		//var free_recall = false;
+		var type_recall = "image";
+		var distractor_size = 7;
+		var distractor_distance = 40;
+		var training_score = 0;
+
+
+		// Chargement du paramétrage par déffaut
+		default_param();
+
+		if (MODE_KIOSK){
+			// Si on est en mode "kiok", on cache le boutton de paramétrage en gardant les valeurs par défaut
+			$("#param_button").hide();
+		}
+		else{
+			// Sinon, on charge les variables sauvegardées dans le navigateur
+			load_param();
+		}
+
+		// On rafraichit les éléments graphiques du paramétrage
+		refresh_para();
+
+		// Chargement des données de l'utilisateur
+		load_user();
+
+		// Donnée de l'expérience d'un utilisateur
+		var expData = [];
+
+		// Liste des séries
+		var expList = [];
+		var try_number = 1;
+		var item_to_recal = [];
+
+		// Donnée d'une série
+		var expSeq  = [];
+		var num_seq = 0;
+
+		// Fonction de chargement d'une série
+		function startExp(b){
+
+			// M récupération du mode entrainement
+			if (b == 'training'){	
+				training_mode = true;	
+			}else{
+				training_mode = false;			
+				if (user_id == "" || user_id == null ){
+					alert("Merci de renseigner vos informations personnelles");
+					return;
+				}
+
+				log (training_score_min);
+				log (training_score);
+				// Si un score à l'entraînemennt est requis
+				if(training_score_min > 0 && training_score < training_score_min ){
+					alert("Vous devez obtenir un score minimum de " + training_score_min + "% à l'entraînement pour pouvoir faire une session.");
+					return;
+				}
+			}
+
+			// Création des données de l'exp
+			createExpData();
+
+		    // On réinitialise les timers aux cas une exp est déjà lancée
+		    jsPsych.pluginAPI.cancelAllKeyboardResponses();
+		    jsPsych.pluginAPI.clearAllTimeouts();
+
+			// Toutes les expériences de jsPsych sont définies par une chronologie. 
+			// La chronologie est un tableau qui contient l'ensemble d'essais que nous voulons exécuter dans l'expérience. 
+			// timeline est  le tableau chronologique.
+			var timeline = [];
+
+			// Instruction
+			var instructions = {
+				type: 'instructions',
+				pages: INSTRUCTIONS,
+				show_clickable_nav: true,
+				button_label_previous: "Précédent",
+				button_label_next: "Suivant"
+			}
+
+		    // Message Début de l'expérience
+		    var starting = {
+		    	type: 'html-button-response',
+		    	stimulus: READY_MSG,
+		    	choices: ['Commencer'],
+		    };
+
+	 		// Message de Fin
+	 		var end = {
+	 			type: "html-keyboard-response",
+	 			stimulus: "Fin."
+	 		};
+
+			// Ajout du message au tableau chrono.
+			if (b != 'skip')
+				timeline.push(instructions);
+			timeline.push(starting);		
+			timeline = timeline.concat(generate_exps());
+
+			stopwatch.reset();
+			stopwatch.stop();
+			stopwatch.clear();
+
+
+			// Réinitialisation du numéro de série
+			try_number = 1;
+			// Initialiser la série
+			jsPsych.init({
+				timeline: timeline,
+
+				on_finish: function() {
+
+					// Récupération des données à garder de l'exp
+					var v = JSON.parse(jsPsych.data.get().json());
+					
+					v = v.filter(function (entry) {
+						return entry.keep === true;
+					});
+
+					// Récupération des données de chaque essais
+					expData["Essais"].forEach(function(elt) {
+						elt["Séquence"] = v.filter(function (entry) {
+							return entry["id_try"] === elt["Numéro"];
+						});
+					});	
+
+					// Récupération des données du rappel  global
+					expData["Rappel Global"] = v.filter(function (entry) {
+						return entry.type === "rappel_global";
+					});
+
+					organize_data();
+
+					log(JSON.stringify(expData));
+
+					// Affichage des résultats
+					readResult();
+					showHideResults();
+
+				}
+			})
+		}
+
+	</script>
+</body>
+</html>

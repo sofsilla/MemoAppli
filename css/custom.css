@@ -1,0 +1,165 @@
+
+#exp_contener{
+	border: 1px solid grey;
+}::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+::-webkit-scrollbar:vertical {
+    width: 12px;
+}
+::-webkit-scrollbar:horizontal {
+    height: 12px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.jumbotron {
+	margin: 2em;
+	padding:2em;
+	background-color: #f3f3f3;
+}
+
+#containerz {
+	display: table;
+	height: 90%;
+}
+
+#rowz {
+	display: table-row;
+}
+
+#leftz {
+	display: table-cell;
+	width: 15%;
+}
+#rightz {
+	display: table-cell;
+}
+
+
+[name^=jspsych-survey-multi-select-response]{
+	display: none;
+}
+
+
+/*[id="jspsych-animation-position-image"]{
+    max-width:85%;
+    vertical-align: middle;
+}*/
+
+.black{
+	color:black;
+}
+
+
+[class^=lab_]{
+	border: 2px solid black;
+    margin-right: 5px; 
+    padding-left: 5px;
+    padding-right: 5px;
+    color: black;
+}
+
+.lab_M{
+	background-color: yellow;
+}
+.lab_T{
+	background-color: #82d1ff;
+}
+.lab_R{
+	background-color: lightgrey;
+}
+
+
+.list-group-item > img {
+  height: 4em;
+}
+
+
+.list-group-item > span {
+  font-size: 2em;
+}
+
+
+.orange{
+	color: orange;
+}
+
+.blue{
+	color: #00c2ff;
+}
+
+.back_red{
+	background-color: red;
+}
+
+.jumbotron{
+	margin: 0 !important;
+}
+
+.margin-1{
+	margin: 1em;
+}
+
+.jspsych-btn{
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+
+.label_item{
+	font-size: 1.5em;
+	margin-top: 1em; 
+}
+
+.instruction_img{
+	width: 30%;
+}
+
+.height_width100 {
+	height: 100%;
+	width: 100%;    
+	position: relative;
+}
+
+input[type=range]{
+	display:  inline-block;
+}
+
+.jspsych-display-element{
+	font-size: 1.7em;
+}
+
+
+#free_recall_input{
+	font-weight: bold;
+	text-align: center;
+	font-size: 1em;
+}
+
+
+/*#mic_button{
+	margin: 0;
+	padding: 20px;
+	background-color: transparent;
+	border: 0;
+}
+
+#mic_button:focus{
+	outline:0;
+}
+
+.mic_button_recording{
+	background: url('../res/img/mic_record.gif') no-repeat;
+    background-size: 100%;
+
+}
+*/
